@@ -1,15 +1,13 @@
 package com.example.poplibexamapp.DI
 
 import android.content.Context
-import com.example.poplibexamapp.GlideImageLoader
-import com.example.poplibexamapp.ImageLoaderInterface
+import com.example.poplibexamapp.*
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import io.reactivex.rxjava3.core.Scheduler
 
 @Component (modules = [AndroidInjectionModule::class, MainModule::class])
 interface MainComponent: AndroidInjector<MainApplication> {
@@ -27,10 +25,13 @@ interface MainComponent: AndroidInjector<MainApplication> {
         fun withNavigatorHolder(navigatorHolder: NavigatorHolder): Builder
 
         @BindsInstance
-        fun withMainThread (schedulers: Scheduler): Builder
+        fun withSchedulers (customSchedulers: CustomSchedulersInterface): Builder
 
         @BindsInstance
         fun withImageLoader (imageLoader: GlideImageLoader): Builder
+
+        @BindsInstance
+        fun withNetworkStatus (networkStatus: NetworkStatus): Builder
 
         fun build(): MainComponent
     }

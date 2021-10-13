@@ -11,8 +11,8 @@ import com.example.poplibexamapp.presenters.ListPresenter
 import com.github.terrakok.cicerone.Router
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
+import com.example.poplibexamapp.netSource.ApiHolder
 import com.example.poplibexamapp.presenters.ListRVAdapter
-import io.reactivex.rxjava3.core.Scheduler
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
@@ -31,15 +31,17 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
     @Inject
     lateinit var router: Router
     @Inject
-    lateinit var mainThread: Scheduler
+    lateinit var customSchedulers: CustomSchedulersInterface
     @Inject
     lateinit var imageLoader: GlideImageLoader
+    @Inject
+    lateinit var networkStatus: NetworkStatus
 
     private val testString: String by lazy { arguments?.getString(ARG_STRING).orEmpty() }
 
-    private val repository = NetSourceRepository(ApiHolder.api)
+    private val repository = NetSourceRepository(ApiHolder.api, customSchedulers)
 
-    private val presenter by moxyPresenter { ListPresenter (mainThread, router, repository) }
+    private val presenter by moxyPresenter { ListPresenter (customSchedulers, router, repository) }
 
     private val viewBinding: FragmentListBinding by viewBinding()
 
@@ -57,5 +59,10 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
 
     override fun setList() {
         adapter?.notifyDataSetChanged()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(context, "List: " + networkStatus.netStatusSubject.value.toString(), Toast.LENGTH_LONG).show()
     }
 }

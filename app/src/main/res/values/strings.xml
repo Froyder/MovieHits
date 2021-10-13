@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">PopLibExamApp</string>
+    <string name="app_name">Popular Movies Database</string>
     <string name="headerText">Popular movies</string>
 </resources>

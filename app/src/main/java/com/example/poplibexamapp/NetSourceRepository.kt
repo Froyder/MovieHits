@@ -1,10 +1,11 @@
 package com.example.poplibexamapp
 
-import com.example.poplibexamapp.data.ItemDataClass
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.example.poplibexamapp.netSource.DataEndPoints
 
-class NetSourceRepository(val api: DataEndPoints): MainRepositoryInterface {
-    override fun getItemsList() = api.getListItems().subscribeOn(Schedulers.io())
-    override fun getItemByID(itemId: String) = api.getItemByID(itemId).subscribeOn(Schedulers.io())
+class NetSourceRepository(
+    private val api: DataEndPoints,
+    private val customSchedulers: CustomSchedulersInterface
+    ): MainRepositoryInterface {
+        override fun getItemsList() = api.getListItems().subscribeOn(customSchedulers.background())
+        override fun getItemByID(itemId: String) = api.getItemByID(itemId).subscribeOn(customSchedulers.background())
 }
