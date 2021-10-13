@@ -5,13 +5,11 @@ import com.example.poplibexamapp.data.ItemDataClass
 import com.example.poplibexamapp.presentations.DetailsScreen
 import com.example.poplibexamapp.presentations.ListFragmentView
 import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.disposables.CompositeDisposable
 import moxy.MvpPresenter
 
 class ListPresenter(
-    private val mainThread: Scheduler,
+    private val customSchedulers: CustomSchedulersInterface,
     private val router: Router,
     private val repository: MainRepositoryInterface
 ): MvpPresenter<ListFragmentView>() {
@@ -47,7 +45,7 @@ class ListPresenter(
     private fun loadData() {
         disposableList.add(
             repository.getItemsList()
-                .observeOn(mainThread)
+                .observeOn(customSchedulers.mainThread())
                 .subscribe({ onResult ->
                     listItemsPresenter.mainList.clear()
                     listItemsPresenter.mainList.addAll(onResult.results)

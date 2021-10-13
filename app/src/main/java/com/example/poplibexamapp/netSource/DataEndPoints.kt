@@ -1,8 +1,8 @@
-package com.example.poplibexamapp
+package com.example.poplibexamapp.netSource
 
 import com.example.poplibexamapp.data.ItemDataClass
 import com.example.poplibexamapp.data.ListOfItems
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
