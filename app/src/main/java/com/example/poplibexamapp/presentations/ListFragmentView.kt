@@ -8,5 +8,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface ListFragmentView: MvpView {
     fun initRVList()
     fun setList ()
-    fun setTest (text: String)
+    fun onBackClicked()
 }

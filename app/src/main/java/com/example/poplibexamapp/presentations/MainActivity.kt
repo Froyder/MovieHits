@@ -6,6 +6,7 @@ import com.example.poplibexamapp.CustomSchedulersInterface
 import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.presenters.MainPresenter
 import com.example.poplibexamapp.R
+import com.example.poplibexamapp.database.LocalStorage
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -24,13 +25,10 @@ class MainActivity : MvpDIActivity(R.layout.activity_main), MainView {
     lateinit var networkStatus: NetworkStatus
     @Inject
     lateinit var customSchedulers: CustomSchedulersInterface
+    @Inject
+    lateinit var dataBase: LocalStorage
 
-    private val presenter by moxyPresenter { MainPresenter (router, customSchedulers) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Toast.makeText(this, networkStatus.netStatusSubject.value.toString(), Toast.LENGTH_LONG).show()
-    }
+    private val presenter by moxyPresenter { MainPresenter (router) }
 
     override fun onResumeFragments() {
         super.onResumeFragments()

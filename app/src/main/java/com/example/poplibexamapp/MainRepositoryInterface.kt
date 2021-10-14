@@ -1,10 +1,10 @@
 package com.example.poplibexamapp
 
-import com.example.poplibexamapp.data.ItemDataClass
-import com.example.poplibexamapp.data.ListOfItems
-import io.reactivex.Single
+import com.example.poplibexamapp.data.MovieDataClass
+import com.example.poplibexamapp.data.MoviesList
+import io.reactivex.rxjava3.core.Single
 
 interface  MainRepositoryInterface {
-    fun getItemsList(): Single<ListOfItems>
-    fun getItemByID(itemId: String): Single<ItemDataClass>
+    fun getMoviesList(): Single<MoviesList>
+    fun getMovieByID(itemId: String): Single<MovieDataClass>
 }
