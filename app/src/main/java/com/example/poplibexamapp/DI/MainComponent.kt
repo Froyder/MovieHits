@@ -6,10 +6,13 @@ import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import dagger.BindsInstance
 import dagger.Component
+import dagger.Provides
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import javax.inject.Singleton
 
-@Component (modules = [AndroidInjectionModule::class, MainModule::class])
+@Singleton
+@Component (modules = [AndroidInjectionModule::class, MainModule::class, DataBaseModule::class])
 interface MainComponent: AndroidInjector<MainApplication> {
 
     @Component.Builder
