@@ -6,6 +6,7 @@ import com.example.poplibexamapp.MainRepository
 import com.example.poplibexamapp.MainRepositoryInterface
 import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.database.LocalStorage
+import com.example.poplibexamapp.database.MoviesCacheInterface
 import com.example.poplibexamapp.netSource.DataEndPoints
 import com.example.poplibexamapp.presentations.DetailsFragment
 import com.example.poplibexamapp.presentations.ListFragment
@@ -34,6 +35,9 @@ interface MainModule {
 
     @ContributesAndroidInjector
     fun bindDetailsFragment(): DetailsFragment
+
+    @ContributesAndroidInjector
+    fun bindMoviesCache(): MoviesCacheInterface
 
     companion object {
 //        @Singleton

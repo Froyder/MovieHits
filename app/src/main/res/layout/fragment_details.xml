@@ -26,9 +26,21 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_Poster">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_Id"
+            android:id="@+id/item_title"
             android:layout_width="300dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_releaseDate"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:textSize="18sp"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,14 +49,16 @@
         </androidx.appcompat.widget.AppCompatTextView>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_title"
+            android:id="@+id/item_rating"
             android:layout_width="300dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
+            android:textSize="18sp"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatTextView>
+            app:layout_constraintTop_toBottomOf="parent">
+        </androidx.appcompat.widget.AppCompatTextView>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="300dp"
@@ -53,7 +67,6 @@
                 android:id="@+id/item_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,8 +1,5 @@
 package com.example.poplibexamapp.presentations
 
-import android.os.Bundle
-import android.widget.Toast
-import com.example.poplibexamapp.CustomSchedulersInterface
 import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.presenters.MainPresenter
 import com.example.poplibexamapp.R
@@ -23,8 +20,6 @@ class MainActivity : MvpDIActivity(R.layout.activity_main), MainView {
     lateinit var navigatorHolder: NavigatorHolder
     @Inject
     lateinit var networkStatus: NetworkStatus
-    @Inject
-    lateinit var customSchedulers: CustomSchedulersInterface
     @Inject
     lateinit var dataBase: LocalStorage
 

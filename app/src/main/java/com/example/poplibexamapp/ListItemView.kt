@@ -1,6 +1,8 @@
 package com.example.poplibexamapp
 
+import com.example.poplibexamapp.data.MovieDataClass
+
 interface ListItemView: IListItemView {
-        fun setTitle(text: String)
+        fun setMovieData(movieData: MovieDataClass)
         fun setPoster(url: String)
 }

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.ForeignKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -29,8 +30,10 @@ data class MovieDataClass (
     @ColumnInfo(name = "release_date")
     @SerializedName("release_date")
     val release_date: String,
+    @ColumnInfo(name = "vote_average")
+    @SerializedName("vote_average")
+    val vote_average: Double,
 
     val genre_name: String?,
-    val vote_average: Double,
     val vote_count: Int
 ) : Parcelable
