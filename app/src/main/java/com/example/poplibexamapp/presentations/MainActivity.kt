@@ -1,8 +1,5 @@
 package com.example.poplibexamapp.presentations
 
-import android.os.Bundle
-import android.widget.Toast
-import com.example.poplibexamapp.CustomSchedulersInterface
 import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.presenters.MainPresenter
 import com.example.poplibexamapp.R

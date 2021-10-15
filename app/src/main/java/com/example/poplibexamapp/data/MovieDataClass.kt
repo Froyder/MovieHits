@@ -37,17 +37,3 @@ data class MovieDataClass (
     val genre_name: String?,
     val vote_count: Int
 ) : Parcelable
-
-//@Entity(
-//    foreignKeys = [ForeignKey(
-//        entity = MovieDataClass::class,
-//        parentColumns = ["id"],
-//        childColumns = ["movieID"],
-//        onDelete = ForeignKey.CASCADE
-//    )]
-//)
-//data class Genre (
-//    var id: Int,
-//    var name: String,
-//    var movieID: Int
-//)

@@ -26,13 +26,10 @@ class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
         }
     }
 
-//    @Inject
-//    lateinit var mainRepository: MainRepository
-
     private val itemID: String by lazy { arguments?.getString(ARG_STRING).orEmpty() }
 
     private val presenter by moxyPresenter {
-        DetailsPresenter (itemID, ioScheduler, dataBase, networkStatus, moviesCache)
+        DetailsPresenter (itemID, ioScheduler, dataBase, networkStatus, moviesCache, mainRepository)
     }
 
     private val viewBinding: FragmentDetailsBinding by viewBinding()

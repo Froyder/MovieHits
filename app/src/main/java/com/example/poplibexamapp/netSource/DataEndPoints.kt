@@ -9,7 +9,10 @@ import retrofit2.http.Path
 interface DataEndPoints {
 
     @GET("/3/movie/popular/")
-    fun getListItems(): Single<MoviesList>
+    fun getPopList(): Single<MoviesList>
+
+    @GET("/3/movie/top_rated/")
+    fun getTopList(): Single<MoviesList>
 
     @GET("/3/movie/{movie_id}")
     fun getItemByID (@Path("movie_id") itemID: String): Single<MovieDataClass>

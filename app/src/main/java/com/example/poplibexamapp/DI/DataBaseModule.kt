@@ -8,7 +8,7 @@ import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.database.LocalStorage
 import com.example.poplibexamapp.database.MoviesCache
 import com.example.poplibexamapp.database.MoviesCacheInterface
-import com.example.poplibexamapp.netSource.DataEndPoints
+import com.example.poplibexamapp.netSource.ApiHolder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.core.Scheduler
@@ -28,12 +28,17 @@ interface DataBaseModule {
         @Provides
         fun provideMoviesCache (dataBase: LocalStorage) : MoviesCacheInterface = MoviesCache(dataBase)
 
-//        @Singleton
-//        fun provideMainRepository (api: DataEndPoints,
-//                                   networkStatus: NetworkStatus,
-//                                   moviesCache: MoviesCacheInterface,
-//                                   ioScheduler : Scheduler
-//        ) : MainRepositoryInterface = MainRepository(api, networkStatus, moviesCache, ioScheduler)
+        @Singleton
+        @Provides
+        fun provideMoviesApi(): ApiHolder = ApiHolder()
+
+        @Singleton
+        @Provides
+        fun provideMainRepository (apiHolder: ApiHolder,
+                                   networkStatus: NetworkStatus,
+                                   moviesCache: MoviesCacheInterface,
+                                   ioScheduler : Scheduler
+        ) : MainRepositoryInterface = MainRepository(apiHolder, networkStatus, moviesCache, ioScheduler)
     }
 
 }

@@ -17,10 +17,10 @@ import moxy.MvpPresenter
 class ListPresenter(
     private val ioScheduler: Scheduler,
     private val router: Router,
-    //private val repository: MainRepositoryInterface,
     private val dataBase: LocalStorage,
     private val networkStatus: NetworkStatus,
-    private val moviesCache: MoviesCacheInterface
+    private val moviesCache: MoviesCacheInterface,
+    private val repository: MainRepositoryInterface,
 ): MvpPresenter<ListFragmentView>() {
 
     class ListItemsPresenter : IListViewPresenter {
@@ -50,8 +50,6 @@ class ListPresenter(
     }
 
     private val disposable = CompositeDisposable()
-
-    private val repository = MainRepository(ApiHolder.api, networkStatus, moviesCache, ioScheduler)
 
     private fun loadData() {
         disposable.add(

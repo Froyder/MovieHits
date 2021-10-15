@@ -1,6 +1,7 @@
 package com.example.poplibexamapp.presenters
 
 import com.example.poplibexamapp.MainRepository
+import com.example.poplibexamapp.MainRepositoryInterface
 import com.example.poplibexamapp.NetworkStatus
 import com.example.poplibexamapp.data.MovieDataClass
 import com.example.poplibexamapp.database.LocalStorage
@@ -17,13 +18,13 @@ class DetailsPresenter(
     private val ioScheduler: Scheduler,
     private val dataBase: LocalStorage,
     private val networkStatus: NetworkStatus,
-    private val moviesCache: MoviesCacheInterface
-    //private val repository: MainRepositoryInterface
+    private val moviesCache: MoviesCacheInterface,
+    private val repository: MainRepositoryInterface
     ): MvpPresenter<DetailsView>() {
 
     private val disposable = CompositeDisposable()
 
-    private val repository = MainRepository(ApiHolder.api, networkStatus, moviesCache, ioScheduler)
+    //private val repository = MainRepository(ApiHolder.api, networkStatus, moviesCache, ioScheduler)
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

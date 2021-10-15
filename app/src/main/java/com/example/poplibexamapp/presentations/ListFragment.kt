@@ -23,11 +23,8 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
         fun newInstance(): Fragment = ListFragment()
     }
 
-//    @Inject
-//    lateinit var mainRepository: MainRepository
-
     private val presenter by moxyPresenter {
-        ListPresenter (ioScheduler, router, dataBase, networkStatus, moviesCache )
+        ListPresenter (ioScheduler, router, dataBase, networkStatus, moviesCache, mainRepository )
     }
 
     private val viewBinding: FragmentListBinding by viewBinding()
