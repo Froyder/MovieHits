@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.poplibexamapp.IListViewPresenter
 import com.example.poplibexamapp.ImageLoaderInterface
 import com.example.poplibexamapp.ListItemView
+import com.example.poplibexamapp.data.MovieDataClass
 import com.example.poplibexamapp.databinding.ItemListElementBinding
 
 class ListRVAdapter(
@@ -27,8 +28,10 @@ class ListRVAdapter(
         ListItemView {
         override var pos = -1
 
-        override fun setTitle(text: String) = with(vb) {
-            tvTitle.text = text
+        override fun setMovieData(movieData: MovieDataClass) = with(vb) {
+            tvTitle.text = movieData.title
+            tvRating.text = "Rating: " + movieData.vote_average.toString()
+            tvReleaseDate.text = "Release date: " +  movieData.release_date
         }
 
         override fun setPoster(url: String) {

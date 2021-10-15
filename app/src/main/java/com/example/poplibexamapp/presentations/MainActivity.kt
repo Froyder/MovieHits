@@ -24,8 +24,6 @@ class MainActivity : MvpDIActivity(R.layout.activity_main), MainView {
     @Inject
     lateinit var networkStatus: NetworkStatus
     @Inject
-    lateinit var customSchedulers: CustomSchedulersInterface
-    @Inject
     lateinit var dataBase: LocalStorage
 
     private val presenter by moxyPresenter { MainPresenter (router) }

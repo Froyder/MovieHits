@@ -2,7 +2,6 @@ package com.example.poplibexamapp.netSource
 
 import com.example.poplibexamapp.data.MovieDataClass
 import com.example.poplibexamapp.data.MoviesList
-import dagger.Provides
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

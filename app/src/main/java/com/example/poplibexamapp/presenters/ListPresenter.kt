@@ -4,20 +4,23 @@ import com.example.poplibexamapp.*
 import com.example.poplibexamapp.data.MovieDataClass
 import com.example.poplibexamapp.data.MoviesList
 import com.example.poplibexamapp.database.LocalStorage
+import com.example.poplibexamapp.database.MoviesCacheInterface
 import com.example.poplibexamapp.netSource.ApiHolder
 import com.example.poplibexamapp.presentations.DetailsScreen
 import com.example.poplibexamapp.presentations.ListFragmentView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 
 class ListPresenter(
-    //private val customSchedulers: CustomSchedulersInterface,
+    private val ioScheduler: Scheduler,
     private val router: Router,
     //private val repository: MainRepositoryInterface,
     private val dataBase: LocalStorage,
-    private val networkStatus: NetworkStatus
+    private val networkStatus: NetworkStatus,
+    private val moviesCache: MoviesCacheInterface
 ): MvpPresenter<ListFragmentView>() {
 
     class ListItemsPresenter : IListViewPresenter {
@@ -28,7 +31,7 @@ class ListPresenter(
 
         override fun bindView(view: ListItemView) {
             val listItem = mainList[view.pos]
-            view.setTitle(listItem.title)
+            view.setMovieData(listItem)
             view.setPoster("http://image.tmdb.org/t/p/w500${listItem.poster_path}")
         }
     }
@@ -48,7 +51,7 @@ class ListPresenter(
 
     private val disposable = CompositeDisposable()
 
-    private val repository = MainRepository(ApiHolder.api, dataBase, networkStatus)
+    private val repository = MainRepository(ApiHolder.api, networkStatus, moviesCache, ioScheduler)
 
     private fun loadData() {
         disposable.add(
@@ -56,7 +59,7 @@ class ListPresenter(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {onResult(it)},
-                    {println(it)}
+                    {onError(it)}
                 )
         )
     }
@@ -65,6 +68,11 @@ class ListPresenter(
         listItemsPresenter.mainList.clear()
         listItemsPresenter.mainList.addAll(list.results)
         viewState.setList()
+    }
+
+    private fun onError(throwable: Throwable){
+        viewState.onError(throwable)
+        println(throwable)
     }
 
     fun backButtonClicked(){

@@ -12,6 +12,7 @@ import com.github.terrakok.cicerone.Router
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
 import com.example.poplibexamapp.database.LocalStorage
+import com.example.poplibexamapp.database.MoviesCacheInterface
 import com.example.poplibexamapp.presenters.ListRVAdapter
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -22,22 +23,12 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
         fun newInstance(): Fragment = ListFragment()
     }
 
-    @Inject
-    lateinit var router: Router
-//    @Inject
-//    lateinit var customSchedulers: CustomSchedulersInterface
-    @Inject
-    lateinit var imageLoader: GlideImageLoader
-    @Inject
-    lateinit var networkStatus: NetworkStatus
-    @Inject
-    lateinit var dataBase: LocalStorage
 //    @Inject
 //    lateinit var mainRepository: MainRepository
 
-    //private val netSource = MainRepository(ApiHolder.api, dataBase, networkStatus)
-
-    private val presenter by moxyPresenter { ListPresenter (router, dataBase, networkStatus) }
+    private val presenter by moxyPresenter {
+        ListPresenter (ioScheduler, router, dataBase, networkStatus, moviesCache )
+    }
 
     private val viewBinding: FragmentListBinding by viewBinding()
 
@@ -51,6 +42,10 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
 
     override fun setList() {
         adapter?.notifyDataSetChanged()
+    }
+
+    override fun onError(throwable: Throwable) {
+        Toast.makeText(context, "Data loading error: $throwable", Toast.LENGTH_LONG).show()
     }
 
     override fun onBackClicked() {

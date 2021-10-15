@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Popular Movies Database</string>
-    <string name="headerText">Popular movies</string>
+    <string name="app_name">MovieHits</string>
+    <string name="headerText">Now in theatres:</string>
 </resources>
