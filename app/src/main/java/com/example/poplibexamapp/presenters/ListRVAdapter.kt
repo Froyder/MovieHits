@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.poplibexamapp.IListViewPresenter
 import com.example.poplibexamapp.ImageLoaderInterface
 import com.example.poplibexamapp.ListItemView
-import com.example.poplibexamapp.data.MovieDataClass
+import com.example.poplibexamapp.model.MovieDataClass
 import com.example.poplibexamapp.databinding.ItemListElementBinding
 
 class ListRVAdapter(

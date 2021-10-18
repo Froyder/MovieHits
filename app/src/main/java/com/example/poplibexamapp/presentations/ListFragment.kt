@@ -3,19 +3,14 @@ package com.example.poplibexamapp.presentations
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.poplibexamapp.databinding.FragmentListBinding
 import com.example.poplibexamapp.presenters.ListPresenter
-import com.github.terrakok.cicerone.Router
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
-import com.example.poplibexamapp.database.LocalStorage
-import com.example.poplibexamapp.database.MoviesCacheInterface
+import com.example.poplibexamapp.databinding.FragmentListBinding
 import com.example.poplibexamapp.presenters.ListRVAdapter
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
 
@@ -24,7 +19,7 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
     }
 
     private val presenter by moxyPresenter {
-        ListPresenter (ioScheduler, router, dataBase, networkStatus, moviesCache, mainRepository )
+        ListPresenter (appContext, router, moviesProvider )
     }
 
     private val viewBinding: FragmentListBinding by viewBinding()
@@ -32,20 +27,25 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
     private var adapter: ListRVAdapter? = null
 
     override fun initRVList() {
-        viewBinding.rvList.layoutManager = LinearLayoutManager(context)
+        viewBinding.rvList.layoutManager = LinearLayoutManager(appContext)
         adapter = ListRVAdapter(presenter.listItemsPresenter, imageLoader)
         viewBinding.rvList.adapter = adapter
     }
 
-    override fun setList() {
+    override fun setList(headerText: String) {
+        viewBinding.tvHeader.text = headerText
         adapter?.notifyDataSetChanged()
     }
 
-    override fun onError(throwable: Throwable) {
-        Toast.makeText(context, "Data loading error: $throwable", Toast.LENGTH_LONG).show()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewBinding.topButton.setOnClickListener { presenter.onTopButtonClicked() }
+        viewBinding.popButton.setOnClickListener { presenter.onPopButtonClicked() }
     }
 
-    override fun onBackClicked() {
-        presenter.backButtonClicked()
+    override fun backPressed() = presenter.backPressed()
+
+    override fun onError(throwable: Throwable) {
+        Toast.makeText(appContext, "Data loading error: $throwable", Toast.LENGTH_LONG).show()
     }
 }

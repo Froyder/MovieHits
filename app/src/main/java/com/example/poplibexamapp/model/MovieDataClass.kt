@@ -1,10 +1,9 @@
-package com.example.poplibexamapp.data
+package com.example.poplibexamapp.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ForeignKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -35,5 +34,6 @@ data class MovieDataClass (
     val vote_average: Double,
 
     val genre_name: String?,
-    val vote_count: Int
+    val vote_count: Int,
+    val status: String?
 ) : Parcelable

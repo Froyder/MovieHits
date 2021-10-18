@@ -1,6 +1,6 @@
 package com.example.poplibexamapp
 
-import com.example.poplibexamapp.data.MovieDataClass
+import com.example.poplibexamapp.model.MovieDataClass
 
 interface ListItemView: IListItemView {
         fun setMovieData(movieData: MovieDataClass)

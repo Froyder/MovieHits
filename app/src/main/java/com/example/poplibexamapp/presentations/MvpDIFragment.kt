@@ -2,13 +2,15 @@ package com.example.poplibexamapp.presentations
 
 import android.content.Context
 import androidx.annotation.LayoutRes
+import com.example.poplibexamapp.BackButtonListener
 import com.example.poplibexamapp.GlideImageLoader
-import com.example.poplibexamapp.MainRepository
-import com.example.poplibexamapp.NetworkStatus
+import com.example.poplibexamapp.MoviesProvider
+import com.example.poplibexamapp.netSource.NetworkStatus
 import com.example.poplibexamapp.database.LocalStorage
-import com.example.poplibexamapp.database.MoviesCacheInterface
+import com.example.poplibexamapp.database.PopularMoviesCacheInterface
+import com.example.poplibexamapp.database.TopMoviesCacheInterface
 import com.example.poplibexamapp.netSource.ApiHolder
-import com.example.poplibexamapp.netSource.DataEndPoints
+import com.example.poplibexamapp.netSource.NetworkStatusInterface
 import com.github.terrakok.cicerone.Router
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -19,8 +21,10 @@ import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
 abstract class MvpDIFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFragment(contentLayoutId),
-    HasAndroidInjector {
+    HasAndroidInjector, BackButtonListener {
 
+    @Inject
+    lateinit var appContext: Context
     @Inject
     lateinit var router: Router
     @Inject
@@ -28,15 +32,17 @@ abstract class MvpDIFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFrag
     @Inject
     lateinit var imageLoader: GlideImageLoader
     @Inject
-    lateinit var networkStatus: NetworkStatus
+    lateinit var networkStatus: NetworkStatusInterface
     @Inject
     lateinit var dataBase: LocalStorage
     @Inject
-    lateinit var moviesCache: MoviesCacheInterface
+    lateinit var popularMoviesCache: PopularMoviesCacheInterface
+    @Inject
+    lateinit var topMoviesCacheInterface: TopMoviesCacheInterface
     @Inject
     lateinit var apiHolder: ApiHolder
     @Inject
-    lateinit var mainRepository: MainRepository
+    lateinit var moviesProvider: MoviesProvider
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

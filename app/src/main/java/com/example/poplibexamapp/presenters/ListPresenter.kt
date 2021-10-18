@@ -1,26 +1,23 @@
 package com.example.poplibexamapp.presenters
 
+import android.content.Context
 import com.example.poplibexamapp.*
-import com.example.poplibexamapp.data.MovieDataClass
-import com.example.poplibexamapp.data.MoviesList
-import com.example.poplibexamapp.database.LocalStorage
-import com.example.poplibexamapp.database.MoviesCacheInterface
-import com.example.poplibexamapp.netSource.ApiHolder
+import com.example.poplibexamapp.model.MovieDataClass
+import com.example.poplibexamapp.model.MoviesList
 import com.example.poplibexamapp.presentations.DetailsScreen
 import com.example.poplibexamapp.presentations.ListFragmentView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 
+private const val POPULAR = "popular"
+private const val TOP_RATED = "top_rated"
+
 class ListPresenter(
-    private val ioScheduler: Scheduler,
+    appContext: Context,
     private val router: Router,
-    private val dataBase: LocalStorage,
-    private val networkStatus: NetworkStatus,
-    private val moviesCache: MoviesCacheInterface,
-    private val repository: MainRepositoryInterface,
+    private val moviesProvider: MoviesProviderInterface,
 ): MvpPresenter<ListFragmentView>() {
 
     class ListItemsPresenter : IListViewPresenter {
@@ -37,11 +34,19 @@ class ListPresenter(
     }
 
     val listItemsPresenter = ListItemsPresenter()
+    private val disposable = CompositeDisposable()
+
+    private val headerTop = appContext.getString(R.string.header_top_rated)
+    private val headerPop = appContext.getString(R.string.header_popular)
+
+    private val sharedPref = appContext.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
+    private var listSettings = sharedPref.getString("LIST_TO_SHOW", POPULAR)
+    private var headerText = if (listSettings == POPULAR) headerPop else headerTop
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.initRVList()
-        loadData()
+        listSettings?.let { loadData(it) }
 
         listItemsPresenter.itemClickListener = { itemView ->
             val item = listItemsPresenter.mainList[itemView.pos]
@@ -49,11 +54,9 @@ class ListPresenter(
         }
     }
 
-    private val disposable = CompositeDisposable()
-
-    private fun loadData() {
-        disposable.add(
-            repository.getMoviesList()
+    private fun loadData(listToShow: String) {
+        disposable.addAll(
+            moviesProvider.getMoviesList(listToShow)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {onResult(it)},
@@ -65,7 +68,7 @@ class ListPresenter(
     private fun onResult(list: MoviesList) {
         listItemsPresenter.mainList.clear()
         listItemsPresenter.mainList.addAll(list.results)
-        viewState.setList()
+        viewState.setList(headerText)
     }
 
     private fun onError(throwable: Throwable){
@@ -73,8 +76,21 @@ class ListPresenter(
         println(throwable)
     }
 
-    fun backButtonClicked(){
+    fun onTopButtonClicked(){
+        sharedPref.edit().putString("LIST_TO_SHOW", TOP_RATED).apply()
+        headerText = headerTop
+        loadData(TOP_RATED)
+    }
+
+    fun onPopButtonClicked(){
+        sharedPref.edit().putString("LIST_TO_SHOW", POPULAR).apply()
+        headerText = headerPop
+        loadData(POPULAR)
+    }
+
+    fun backPressed(): Boolean {
         router.finishChain()
+        return true
     }
 
     override fun onDestroy() {

@@ -3,16 +3,13 @@ package com.example.poplibexamapp.presentations
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.example.poplibexamapp.databinding.FragmentDetailsBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
-import com.example.poplibexamapp.data.MovieDataClass
-import com.example.poplibexamapp.database.LocalStorage
-import com.example.poplibexamapp.database.MoviesCacheInterface
+import com.example.poplibexamapp.model.MovieDataClass
+import com.example.poplibexamapp.databinding.FragmentDetailsBinding
 import com.example.poplibexamapp.presenters.DetailsPresenter
-import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.core.Single
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
 
@@ -28,9 +25,7 @@ class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
 
     private val itemID: String by lazy { arguments?.getString(ARG_STRING).orEmpty() }
 
-    private val presenter by moxyPresenter {
-        DetailsPresenter (itemID, ioScheduler, dataBase, networkStatus, moviesCache, mainRepository)
-    }
+    private val presenter by moxyPresenter { DetailsPresenter (itemID, router, moviesProvider)}
 
     private val viewBinding: FragmentDetailsBinding by viewBinding()
 
@@ -45,5 +40,7 @@ class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
     override fun onError(throwable: Throwable) {
         Toast.makeText(context, "Data loading error: $throwable", Toast.LENGTH_LONG).show()
     }
+
+    override fun backPressed() = presenter.backPressed()
 
 }

@@ -1,13 +1,15 @@
-package com.example.poplibexamapp
+package com.example.poplibexamapp.netSource
 
 import android.content.Context
 
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import javax.inject.Inject
 
-class NetworkStatus(context: Context) : NetworkStatusInterface {
+class NetworkStatus @Inject constructor(context: Context) : NetworkStatusInterface {
     val netStatusSubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     init {
@@ -30,5 +32,5 @@ class NetworkStatus(context: Context) : NetworkStatusInterface {
     }
 
     override fun isOnline() = netStatusSubject
-    override fun isOnlineSingle() = netStatusSubject.first(false)
+    override fun isOnlineSingle(): Single<Boolean> = netStatusSubject.first(false)
 }
