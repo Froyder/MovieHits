@@ -13,4 +13,8 @@ class MainPresenter(private val router: Router) : MvpPresenter<MainView>() {
         router.navigateTo(ListScreen())
     }
 
+    fun backClicked() {
+        router.exit()
+    }
+
 }

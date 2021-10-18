@@ -1,7 +1,9 @@
-package com.example.poplibexamapp.DI
+package com.example.poplibexamapp.dagger
 
 import android.content.Context
 import com.example.poplibexamapp.*
+import com.example.poplibexamapp.netSource.NetworkStatus
+import com.example.poplibexamapp.netSource.NetworkStatusInterface
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import dagger.BindsInstance
@@ -34,7 +36,7 @@ interface MainComponent: AndroidInjector<MainApplication> {
         fun withImageLoader (imageLoader: GlideImageLoader): Builder
 
         @BindsInstance
-        fun withNetworkStatus (networkStatus: NetworkStatus): Builder
+        fun withNetworkStatus (networkStatus: NetworkStatusInterface): Builder
 
         fun build(): MainComponent
     }

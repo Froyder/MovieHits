@@ -1,12 +1,13 @@
-package com.example.poplibexamapp
+package com.example.poplibexamapp.netSource
 
+import com.example.poplibexamapp.BuildConfig
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-object MyInterceptor : Interceptor {
+object MoviesInterceptor : Interceptor {
 
     @Throws(IOException::class)
 

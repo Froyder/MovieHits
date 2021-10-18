@@ -1,7 +1,7 @@
 package com.example.poplibexamapp.netSource
 
-import com.example.poplibexamapp.data.MovieDataClass
-import com.example.poplibexamapp.data.MoviesList
+import com.example.poplibexamapp.model.MovieDataClass
+import com.example.poplibexamapp.model.MoviesList
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,6 +1,7 @@
 package com.example.poplibexamapp.presentations
 
-import com.example.poplibexamapp.NetworkStatus
+import com.example.poplibexamapp.BackButtonListener
+import com.example.poplibexamapp.netSource.NetworkStatus
 import com.example.poplibexamapp.presenters.MainPresenter
 import com.example.poplibexamapp.R
 import com.example.poplibexamapp.database.LocalStorage
@@ -33,5 +34,14 @@ class MainActivity : MvpDIActivity(R.layout.activity_main), MainView {
     override fun onPause() {
         super.onPause()
         navigatorHolder.removeNavigator()
+    }
+
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if(it is BackButtonListener && it.backPressed()){
+                return
+            }
+        }
+        presenter.backClicked()
     }
 }

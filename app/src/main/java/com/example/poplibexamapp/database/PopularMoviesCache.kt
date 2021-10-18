@@ -1,16 +1,18 @@
 package com.example.poplibexamapp.database
 
-import com.example.poplibexamapp.data.MovieDataClass
-import com.example.poplibexamapp.data.MoviesList
+import com.example.poplibexamapp.model.MovieDataClass
+import com.example.poplibexamapp.model.MoviesList
 import io.reactivex.rxjava3.core.Single
 
-class MoviesCache (private val dataBase: LocalStorage): MoviesCacheInterface {
+private const val POPULAR = "popular"
+
+class PopularMoviesCache (private val dataBase: LocalStorage): PopularMoviesCacheInterface {
 
     override fun updateCachedList(moviesList: MoviesList) {
         val roomList = moviesList.results.map { movie ->
             MovieDataClass(movie.id, movie.title, movie.poster_path,
                 movie.overview, movie.release_date, movie.vote_average,
-                movie.genre_name, movie.vote_count
+                movie.genre_name, movie.vote_count, POPULAR
             )
         }
         dataBase.moviesDao().updateList(roomList)
@@ -23,9 +25,9 @@ class MoviesCache (private val dataBase: LocalStorage): MoviesCacheInterface {
     override fun getCachedList(): Single<MoviesList> {
         return Single.fromCallable {
             MoviesList (results =
-            dataBase.moviesDao().getMoviesListFromDB().map { movie ->
+            dataBase.moviesDao().getMoviesListFromDB(POPULAR).map { movie ->
                 MovieDataClass(movie.id, movie.title, movie.poster_path, movie.overview,
-                    movie.release_date,movie.vote_average, movie.genre_name,movie.vote_count
+                    movie.release_date,movie.vote_average, movie.genre_name,movie.vote_count, POPULAR
                 )
             })
         }

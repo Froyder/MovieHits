@@ -1,4 +1,4 @@
-package com.example.poplibexamapp
+package com.example.poplibexamapp.netSource
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

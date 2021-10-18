@@ -1,6 +1,5 @@
 package com.example.poplibexamapp.netSource
 
-import com.example.poplibexamapp.MyInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -20,7 +19,7 @@ class ApiHolder {
             .baseUrl("https://api.themoviedb.org/")
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(createOkHttpClient(MyInterceptor))
+            .client(createOkHttpClient(MoviesInterceptor))
             .build()
             .create(DataEndPoints::class.java)
     }

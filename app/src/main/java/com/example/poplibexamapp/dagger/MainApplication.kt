@@ -1,7 +1,7 @@
-package com.example.poplibexamapp.DI
+package com.example.poplibexamapp.dagger
 
 import com.example.poplibexamapp.GlideImageLoader
-import com.example.poplibexamapp.NetworkStatus
+import com.example.poplibexamapp.netSource.NetworkStatus
 import com.github.terrakok.cicerone.Cicerone
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
