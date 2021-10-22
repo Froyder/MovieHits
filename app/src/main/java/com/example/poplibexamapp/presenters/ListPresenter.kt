@@ -1,6 +1,7 @@
 package com.example.poplibexamapp.presenters
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.poplibexamapp.*
 import com.example.poplibexamapp.model.MovieDataClass
 import com.example.poplibexamapp.model.MoviesList
@@ -13,9 +14,11 @@ import moxy.MvpPresenter
 
 private const val POPULAR = "popular"
 private const val TOP_RATED = "top_rated"
+private const val HEADER_TOP = "Top rated movies:"
+private const val HEADER_POP = "Now in theatres:"
 
 class ListPresenter(
-    appContext: Context,
+    private val sharedPreferences: SharedPreferences,
     private val router: Router,
     private val moviesProvider: MoviesProviderInterface,
 ): MvpPresenter<ListFragmentView>() {
@@ -36,12 +39,8 @@ class ListPresenter(
     val listItemsPresenter = ListItemsPresenter()
     private val disposable = CompositeDisposable()
 
-    private val headerTop = appContext.getString(R.string.header_top_rated)
-    private val headerPop = appContext.getString(R.string.header_popular)
-
-    private val sharedPref = appContext.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
-    private var listSettings = sharedPref.getString("LIST_TO_SHOW", POPULAR)
-    private var headerText = if (listSettings == POPULAR) headerPop else headerTop
+    private var listSettings = sharedPreferences.getString("LIST_TO_SHOW", POPULAR)
+    private var headerText = if (listSettings == POPULAR) HEADER_POP else HEADER_TOP
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -77,14 +76,14 @@ class ListPresenter(
     }
 
     fun onTopButtonClicked(){
-        sharedPref.edit().putString("LIST_TO_SHOW", TOP_RATED).apply()
-        headerText = headerTop
+        sharedPreferences.edit().putString("LIST_TO_SHOW", TOP_RATED).apply()
+        headerText = HEADER_TOP
         loadData(TOP_RATED)
     }
 
     fun onPopButtonClicked(){
-        sharedPref.edit().putString("LIST_TO_SHOW", POPULAR).apply()
-        headerText = headerPop
+        sharedPreferences.edit().putString("LIST_TO_SHOW", POPULAR).apply()
+        headerText = HEADER_POP
         loadData(POPULAR)
     }
 

@@ -1,6 +1,7 @@
 package com.example.poplibexamapp.presentations
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.LayoutRes
 import com.example.poplibexamapp.BackButtonListener
 import com.example.poplibexamapp.GlideImageLoader
@@ -43,6 +44,8 @@ abstract class MvpDIFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFrag
     lateinit var apiHolder: ApiHolder
     @Inject
     lateinit var moviesProvider: MoviesProvider
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

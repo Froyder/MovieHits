@@ -1,6 +1,7 @@
 package com.example.poplibexamapp.dagger
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.poplibexamapp.*
 import com.example.poplibexamapp.netSource.NetworkStatus
 import com.example.poplibexamapp.netSource.NetworkStatusInterface
@@ -37,6 +38,9 @@ interface MainComponent: AndroidInjector<MainApplication> {
 
         @BindsInstance
         fun withNetworkStatus (networkStatus: NetworkStatusInterface): Builder
+
+        @BindsInstance
+        fun withSharedPrefs (sharedPrefs: SharedPreferences): Builder
 
         fun build(): MainComponent
     }
