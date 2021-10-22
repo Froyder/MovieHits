@@ -19,7 +19,7 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
     }
 
     private val presenter by moxyPresenter {
-        ListPresenter (appContext, router, moviesProvider )
+        ListPresenter (sharedPreferences, router, moviesProvider )
     }
 
     private val viewBinding: FragmentListBinding by viewBinding()

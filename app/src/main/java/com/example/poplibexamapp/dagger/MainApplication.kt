@@ -1,5 +1,6 @@
 package com.example.poplibexamapp.dagger
 
+import android.content.Context
 import com.example.poplibexamapp.GlideImageLoader
 import com.example.poplibexamapp.netSource.NetworkStatus
 import com.github.terrakok.cicerone.Cicerone
@@ -20,5 +21,6 @@ class MainApplication: DaggerApplication() {
             .withIoScheduler(Schedulers.io())
             .withImageLoader(GlideImageLoader())
             .withNetworkStatus(NetworkStatus(applicationContext))
+            .withSharedPrefs(applicationContext.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE))
             .build()
 }
