@@ -1,12 +1,8 @@
 package com.example.poplibexamapp.presentations
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.annotation.LayoutRes
-import com.example.poplibexamapp.BackButtonListener
-import com.example.poplibexamapp.GlideImageLoader
-import com.example.poplibexamapp.MoviesProvider
-import com.example.poplibexamapp.netSource.NetworkStatus
+import com.example.poplibexamapp.*
 import com.example.poplibexamapp.database.LocalStorage
 import com.example.poplibexamapp.database.PopularMoviesCacheInterface
 import com.example.poplibexamapp.database.TopMoviesCacheInterface
@@ -22,7 +18,7 @@ import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
 abstract class MvpDIFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFragment(contentLayoutId),
-    HasAndroidInjector, BackButtonListener {
+    HasAndroidInjector {
 
     @Inject
     lateinit var appContext: Context
@@ -45,7 +41,7 @@ abstract class MvpDIFragment(@LayoutRes contentLayoutId: Int) : MvpAppCompatFrag
     @Inject
     lateinit var moviesProvider: MoviesProvider
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var settingsProvider: SettingsProviderInterface
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>

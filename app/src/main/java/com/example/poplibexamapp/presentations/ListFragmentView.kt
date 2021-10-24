@@ -9,6 +9,6 @@ import moxy.viewstate.strategy.alias.AddToEnd
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ListFragmentView: MvpView {
     fun initRVList()
-    fun setList (headerText: String)
+    fun setList (header: String)
     fun onError(throwable: Throwable)
 }

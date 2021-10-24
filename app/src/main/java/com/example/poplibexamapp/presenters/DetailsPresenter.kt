@@ -4,13 +4,14 @@ import com.example.poplibexamapp.MoviesProviderInterface
 import com.example.poplibexamapp.model.MovieDataClass
 import com.example.poplibexamapp.presentations.DetailsView
 import com.github.terrakok.cicerone.Router
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 
-class DetailsPresenter(
-    private val itemID: String,
-    private val router: Router,
+class DetailsPresenter @AssistedInject constructor(
+    @Assisted private val itemID: String,
     private val repository: MoviesProviderInterface
     ): MvpPresenter<DetailsView>() {
 
@@ -36,11 +37,6 @@ class DetailsPresenter(
     private fun onError(throwable: Throwable){
         viewState.onError(throwable)
         println(throwable)
-    }
-
-    fun backPressed(): Boolean {
-        router.exit()
-        return true
     }
 
     override fun onDestroy() {

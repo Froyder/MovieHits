@@ -35,13 +35,4 @@ class MainActivity : MvpDIActivity(R.layout.activity_main), MainView {
         super.onPause()
         navigatorHolder.removeNavigator()
     }
-
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if(it is BackButtonListener && it.backPressed()){
-                return
-            }
-        }
-        presenter.backClicked()
-    }
 }
