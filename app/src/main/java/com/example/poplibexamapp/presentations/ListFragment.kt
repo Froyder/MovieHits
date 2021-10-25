@@ -9,8 +9,12 @@ import com.example.poplibexamapp.presenters.ListPresenter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
 import com.example.poplibexamapp.databinding.FragmentListBinding
+import com.example.poplibexamapp.presenters.DetailsPresentersFactory
+import com.example.poplibexamapp.presenters.ListPresentersFactory
 import com.example.poplibexamapp.presenters.ListRVAdapter
+import kotlinx.android.synthetic.main.fragment_list.*
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
 
@@ -18,9 +22,10 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
         fun newInstance(): Fragment = ListFragment()
     }
 
-    private val presenter by moxyPresenter {
-        ListPresenter (sharedPreferences, router, moviesProvider )
-    }
+    @Inject
+    lateinit var presenterFactory: ListPresentersFactory
+
+    private val presenter by moxyPresenter { presenterFactory.createListPresenter() }
 
     private val viewBinding: FragmentListBinding by viewBinding()
 
@@ -32,7 +37,7 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
         viewBinding.rvList.adapter = adapter
     }
 
-    override fun setList(headerText: String) {
+    override fun setList(headerText : String) {
         viewBinding.tvHeader.text = headerText
         adapter?.notifyDataSetChanged()
     }
@@ -42,8 +47,6 @@ class ListFragment: MvpDIFragment(R.layout.fragment_list), ListFragmentView {
         viewBinding.topButton.setOnClickListener { presenter.onTopButtonClicked() }
         viewBinding.popButton.setOnClickListener { presenter.onPopButtonClicked() }
     }
-
-    override fun backPressed() = presenter.backPressed()
 
     override fun onError(throwable: Throwable) {
         Toast.makeText(appContext, "Data loading error: $throwable", Toast.LENGTH_LONG).show()

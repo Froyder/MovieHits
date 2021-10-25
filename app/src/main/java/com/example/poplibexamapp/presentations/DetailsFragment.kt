@@ -7,9 +7,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.poplibexamapp.*
 import com.example.poplibexamapp.model.MovieDataClass
 import com.example.poplibexamapp.databinding.FragmentDetailsBinding
-import com.example.poplibexamapp.presenters.DetailsPresenter
-import io.reactivex.rxjava3.core.Single
+import com.example.poplibexamapp.presenters.DetailsPresentersFactory
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
 
@@ -23,9 +23,12 @@ class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
         }
     }
 
+    @Inject
+    lateinit var presenterFactory: DetailsPresentersFactory
+
     private val itemID: String by lazy { arguments?.getString(ARG_STRING).orEmpty() }
 
-    private val presenter by moxyPresenter { DetailsPresenter (itemID, router, moviesProvider)}
+    private val presenter by moxyPresenter { presenterFactory.createDetailsPresenter(itemID) }
 
     private val viewBinding: FragmentDetailsBinding by viewBinding()
 
@@ -40,7 +43,5 @@ class DetailsFragment: MvpDIFragment(R.layout.fragment_details), DetailsView {
     override fun onError(throwable: Throwable) {
         Toast.makeText(context, "Data loading error: $throwable", Toast.LENGTH_LONG).show()
     }
-
-    override fun backPressed() = presenter.backPressed()
 
 }

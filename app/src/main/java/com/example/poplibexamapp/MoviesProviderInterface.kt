@@ -5,6 +5,6 @@ import com.example.poplibexamapp.model.MoviesList
 import io.reactivex.rxjava3.core.Single
 
 interface  MoviesProviderInterface {
-    fun getMoviesList(listToShow: String): Single<MoviesList>
+    fun getMoviesList(): Single<MoviesList>
     fun getMovieByID(itemId: String): Single<MovieDataClass>
 }

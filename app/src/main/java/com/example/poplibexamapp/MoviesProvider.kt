@@ -1,5 +1,6 @@
 package com.example.poplibexamapp
 
+import android.content.SharedPreferences
 import com.example.poplibexamapp.database.PopularMoviesCacheInterface
 import com.example.poplibexamapp.database.TopMoviesCacheInterface
 import com.example.poplibexamapp.model.MovieDataClass
@@ -10,9 +11,10 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-private const val POPULAR = "popular"
+private const val POPULAR = "POPULAR"
 
 class MoviesProvider @Inject constructor(
+    private val settingsProvider: SettingsProviderInterface,
     private val apiHolder: ApiHolder,
     private val networkStatus: NetworkStatusInterface,
     private val topMoviesCache: TopMoviesCacheInterface,
@@ -20,10 +22,10 @@ class MoviesProvider @Inject constructor(
     private val ioScheduler : Scheduler
     ): MoviesProviderInterface {
 
-    override fun getMoviesList(listToShow: String): Single<MoviesList> =
+    override fun getMoviesList(): Single<MoviesList> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                if (listToShow == POPULAR) {
+                if (settingsProvider.getListSettings() == POPULAR) {
                     apiHolder.api.getPopList()
                         .flatMap { moviesList ->
                             Single.fromCallable {
@@ -41,7 +43,7 @@ class MoviesProvider @Inject constructor(
                         }
                 }
             } else {
-                if (listToShow == POPULAR) popularMoviesCache.getCachedList() else topMoviesCache.getCachedList()
+                if (settingsProvider.getListSettings() == POPULAR) popularMoviesCache.getCachedList() else topMoviesCache.getCachedList()
             }
         }.subscribeOn(ioScheduler)
 

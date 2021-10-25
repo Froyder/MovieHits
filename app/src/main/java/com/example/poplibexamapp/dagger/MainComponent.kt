@@ -3,7 +3,6 @@ package com.example.poplibexamapp.dagger
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.poplibexamapp.*
-import com.example.poplibexamapp.netSource.NetworkStatus
 import com.example.poplibexamapp.netSource.NetworkStatusInterface
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
