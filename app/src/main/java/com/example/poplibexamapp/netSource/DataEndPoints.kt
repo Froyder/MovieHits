@@ -1,5 +1,7 @@
 package com.example.poplibexamapp.netSource
 
+import androidx.paging.PagedList
+import androidx.paging.PagingData
 import com.example.poplibexamapp.model.MovieDataClass
 import com.example.poplibexamapp.model.MoviesList
 import io.reactivex.rxjava3.core.Single
