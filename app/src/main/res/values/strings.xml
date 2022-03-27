@@ -5,4 +5,7 @@
     <string name="pop_list">Popular Movies</string>
     <string name="top_list">Top Rated Movies</string>
     <string name="no_connection">You are offline! Data was loaded from application cache.</string>
+    <string name="top_menu">Top Rated</string>
+    <string name="pop_menu">Popular</string>
+    <string name="search_menu">Search</string>
 </resources>
